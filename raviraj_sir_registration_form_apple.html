@@ -320,7 +320,7 @@ src="https://www.facebook.com/tr?id=1402902101745553&ev=PageView&noscript=1"
   </div>
 </div>
 
-<script>
+<script>const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx4Yk6y7X_j-lzKHZ0eF8UR2G5IuKneNReXG3L9vSMix0Gvmo8h1UabkXKfWHuK9wgh/exec";
 function submitForm() {
   var fullname = document.getElementById('cf_fullname').value.trim();
   var phone  = document.getElementById('cf_phone').value.trim();
@@ -328,7 +328,14 @@ function submitForm() {
   var gender = document.getElementById('cf_gender').value;
   var prof   = document.getElementById('cf_profession').value;
   var district = document.getElementById('cf_district').value;
-
+const formData = {
+    fullname: fullname,
+    phone: phone,
+    age: age,
+    gender: gender,
+    profession: prof,
+    district: district
+};
   if (!fullname || !phone || !age || !gender || !prof || !district) {
     alert(' બધા fields ભરો!'); return;
   }
@@ -346,7 +353,20 @@ function submitForm() {
     + '💼 *વ્યવસાય (Profession):* ' + prof + '\n'
     + '📍 *જિલ્લો (District):* ' + district + '\n\n'
     + 'કૃપા કરીને મને આગળ ની માહિતી આપો✅!';
-
+fetch(SCRIPT_URL, {
+  method: "POST",
+  body: JSON.stringify(formData),
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
+.then(response => response.json())
+.then(data => {
+  console.log("Data Saved:", data);
+})
+.catch(error => {
+  console.error("Error:", error);
+});
   document.getElementById('formSection').style.display = 'none';
   document.getElementById('successSection').style.display = 'block';
 
